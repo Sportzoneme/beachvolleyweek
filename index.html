@@ -293,8 +293,8 @@ section{ padding:96px 28px; border-top:1px solid var(--line); scroll-margin-top:
   display:grid; grid-template-columns:220px 1fr; gap:48px; align-items:start;
 }
 @media(max-width:780px){
-  .reg-layout{ grid-template-columns:1fr; }
-  .reg-nav{ position:static; top:auto; margin-bottom:8px; }
+  .reg-layout{ grid-template-columns:minmax(0,1fr); }
+  .reg-nav{ position:static; top:auto; margin-bottom:8px; min-width:0; }
 }
 .reg-nav{ position:sticky; top:80px; }
 .reg-nav-title{ font-size:11px; font-weight:800; color:var(--sand-faint); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px; }
@@ -307,7 +307,7 @@ section{ padding:96px 28px; border-top:1px solid var(--line); scroll-margin-top:
 .reg-nav a:hover, .reg-nav a.active{
   background:var(--orange-soft); color:var(--sand); border-left-color:var(--orange);
 }
-.reg-content{ display:flex; flex-direction:column; gap:48px; }
+.reg-content{ display:flex; flex-direction:column; gap:48px; min-width:0; }
 .reg-section{ scroll-margin-top:80px; }
 .reg-sec-num{ font-size:11px; font-weight:800; color:var(--orange); letter-spacing:0.10em; text-transform:uppercase; margin-bottom:8px; }
 .reg-sec-title{ font-family:"Archivo Black",sans-serif; font-size:clamp(22px,3vw,30px); text-transform:uppercase; margin-bottom:12px; line-height:1.05; }
@@ -333,6 +333,7 @@ section{ padding:96px 28px; border-top:1px solid var(--line); scroll-margin-top:
 }
 .crow .ctext{ font-size:14px; color:var(--sand-dim); }
 .crow .ctext b{ color:var(--sand); }
+.table-scroll{ width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
 .scoretable{ width:100%; border-collapse:collapse; font-size:13.5px; margin-top:8px; }
 .scoretable th{
   text-align:left; padding:11px 14px; font-size:11px; text-transform:uppercase;
@@ -512,16 +513,58 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
   .sec-title{ margin-bottom:12px; }
   .sec-lede{ font-size:14.5px; margin-bottom:32px; }
 
-  /* sponsor: una colonna sola per evidenziare ogni partner */
-  .sponsors-grid{ grid-template-columns:1fr; gap:12px; }
-  .sponsor-card{ min-height:120px; padding:24px; }
+  /* sponsor: due colonne compatte su mobile */
+  .sponsors-grid{ grid-template-columns:1fr 1fr; gap:10px; }
+  .sponsor-card{ min-height:96px; padding:14px 10px; border-radius:12px; }
+  .sponsor-card img{ max-width:100% !important; max-height:64px !important; }
+
+  /* regolamento: nav sezioni più leggibile, scrollabile orizzontalmente */
+  .reg-layout{ gap:24px; }
+  .reg-nav{
+    display:flex; gap:8px; overflow-x:auto; padding-bottom:6px;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .reg-nav::-webkit-scrollbar{ display:none; }
+  .reg-nav-title{ display:none; }
+  .reg-nav a{
+    flex:0 0 auto; white-space:nowrap; margin-bottom:0;
+    border-left:none; border:1px solid var(--line); font-size:12px; padding:8px 13px;
+  }
+  .reg-nav a:hover, .reg-nav a.active{ border-color:var(--orange-border); }
+  .reg-content{ gap:36px; }
+  .reg-sec-title{ font-size:22px; }
+
+  /* infocard: una colonna, etichetta sopra il valore */
+  .infocard{ grid-template-columns:1fr; gap:4px; padding:13px 15px; }
+  .infocard .ilabel{ font-size:12.5px; color:var(--sand-faint); }
+  .infocard .ival{ font-size:13.5px; }
+
+  /* tabella punteggio: niente overflow di pagina, scroll orizzontale pulito se serve */
+  .scoretable{ font-size:12px; min-width:460px; }
+  .scoretable th{ padding:9px 10px; font-size:9.5px; }
+  .scoretable td{ padding:10px 10px; }
+
+  /* step (percorso gironi): badge sopra, testo a piena larghezza */
+  .step{ grid-template-columns:1fr; gap:8px; padding:13px 14px; }
+  .step .sbadge{ width:26px; height:26px; }
+  .step .sresult{ grid-column:1; }
+
+  /* path-desktop forzato a nascosto sotto 640px (path-mobile prende il posto) */
+  .path-desktop{ display:none; }
+  .path-mobile{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+
+  /* criteri di parità: numero e testo più compatti */
+  .crow{ padding:11px 13px; gap:11px; }
+  .crow .ctext{ font-size:13px; }
+
+  /* fase finale: righe più compatte */
+  .forow{ padding:13px 14px; gap:11px; }
+  .fonum{ font-size:17px; width:22px; }
+  .foname{ font-size:13.5px; }
 
   /* premi: badge sotto il testo invece che a fianco, niente ammucchiamenti */
   .premio-inner{ flex-direction:column; align-items:flex-start; gap:14px; padding:20px; }
   .premio-medal{ order:-1; width:48px; height:48px; font-size:24px; }
-
-  /* prezzo iscrizione: impilato e centrato per leggibilità */
-  .pricebox{ flex-direction:column; align-items:flex-start; padding:20px; gap:14px; }
 
   /* timeline calendario: scroll fluido con snap */
   .timeline{ scroll-snap-type:x mandatory; }
@@ -531,6 +574,10 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
   .contact-card{ padding:18px; }
   .footer-links{ gap:16px 20px; }
   footer{ padding:40px 20px 28px; }
+
+  /* prezzo iscrizione: già impilato sopra, qui solo riduzione font */
+  .pricebox{ flex-direction:column; align-items:flex-start; padding:20px; gap:14px; }
+  .pamount{ font-size:36px; }
 }
 </style>
 </head>
@@ -550,8 +597,8 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
     <div class="nav-links">
       <a href="#come-funziona">Come funziona</a>
       <a href="#premi">Premi</a>
-      <a href="#sponsor">Sponsor</a>
       <a href="#regolamento">Regolamento</a>
+      <a href="#sponsor">Sponsor</a>
       <a href="#social">Social</a>
       <a href="#contatti">Contatti</a>
     </div>
@@ -564,8 +611,8 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
 <div class="mobile-menu" id="mobileMenu">
   <a href="#come-funziona">Come funziona</a>
   <a href="#premi">Premi</a>
-  <a href="#sponsor">Sponsor</a>
   <a href="#regolamento">Regolamento</a>
+  <a href="#sponsor">Sponsor</a>
   <a href="#social">Social</a>
   <a href="#contatti" class="mob-cta">Iscriviti →</a>
 </div>
@@ -687,29 +734,6 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
   </div>
 </section>
 
-<!-- SPONSOR -->
-<section id="sponsor">
-  <div class="wrap">
-    <div class="sec-eyebrow">Sponsor e Partner</div>
-    <h2 class="sec-title">Sponsor e Partner</h2>
-    
-                <div class="sponsors-grid">
-      <div class="sponsor-card">
-        <img src="sponsor-1.png" alt="Smashers" loading="lazy" width="170" height="140" style="max-width:170px; max-height:140px; object-fit:contain;">
-      </div>
-      <div class="sponsor-card">
-        <img src="sponsor-2.png" alt="Basilico" loading="lazy" width="230" height="110" style="max-width:230px; max-height:110px; object-fit:contain;">
-      </div>
-      <div class="sponsor-card">
-        <img src="sponsor-3.png" alt="Bar De Luca" loading="lazy" width="260" height="160" style="max-width:260px; max-height:160px; object-fit:contain;">
-      </div>
-      <div class="sponsor-card">
-        <img src="sponsor-4.jpg" alt="Sottosanti" loading="lazy" width="260" height="150" style="max-width:260px; max-height:150px; object-fit:contain; border-radius:10px;">
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- REGOLAMENTO -->
 <section id="regolamento">
   <div class="wrap">
@@ -797,6 +821,7 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
           <div class="reg-sec-num">04 — PUNTEGGIO</div>
           <h3 class="reg-sec-title">Come si vince un incontro</h3>
           <p class="reg-sec-lede">Vince la squadra che si aggiudica per prima 2 set.</p>
+          <div class="table-scroll">
           <table class="scoretable">
             <thead><tr><th>Fase</th><th>Set 1 e 2</th><th>Eventuale 3° set</th></tr></thead>
             <tbody>
@@ -809,6 +834,7 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
               <tr><td class="bold">Quarti → Finali</td><td>21 punti (scarto min. 2)</td><td>15 punti (scarto min. 2)</td></tr>
             </tbody>
           </table>
+          </div>
           <div class="infocard" style="margin-top:20px;"><div class="ilabel">Cambio campo</div><div class="ival">Le squadre cambiano campo ogni <strong style="color:var(--sand)">7 punti cumulativi</strong> nel set in corso. Valido in ogni fase del torneo.</div></div>
         </div>
 
@@ -853,6 +879,29 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
 
       </div><!-- /reg-content -->
     </div><!-- /reg-layout -->
+  </div>
+</section>
+
+<!-- SPONSOR -->
+<section id="sponsor">
+  <div class="wrap">
+    <div class="sec-eyebrow">Sponsor e Partner</div>
+    <h2 class="sec-title">Sponsor e Partner</h2>
+    
+                <div class="sponsors-grid">
+      <div class="sponsor-card">
+        <img src="sponsor-1.png" alt="Smashers" loading="lazy" width="170" height="140" style="max-width:170px; max-height:140px; object-fit:contain;">
+      </div>
+      <div class="sponsor-card">
+        <img src="sponsor-2.png" alt="Basilico" loading="lazy" width="230" height="110" style="max-width:230px; max-height:110px; object-fit:contain;">
+      </div>
+      <div class="sponsor-card">
+        <img src="sponsor-3.png" alt="Bar De Luca" loading="lazy" width="260" height="160" style="max-width:260px; max-height:160px; object-fit:contain;">
+      </div>
+      <div class="sponsor-card">
+        <img src="sponsor-4.jpg" alt="Sottosanti" loading="lazy" width="260" height="150" style="max-width:260px; max-height:150px; object-fit:contain; border-radius:10px;">
+      </div>
+    </div>
   </div>
 </section>
 
@@ -912,6 +961,7 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
       <a href="#come-funziona">Come funziona</a>
       <a href="#premi">Premi</a>
       <a href="#regolamento">Regolamento</a>
+      <a href="#sponsor">Sponsor</a>
       <a href="#contatti">Contatti</a>
     </div>
     <p>Beach Volley Week 2026 · Organizzato da SportZone<br>Santa Margherita, Messina · 28 Luglio – 2 Agosto 2026</p>
