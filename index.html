@@ -364,28 +364,54 @@ section{ padding:96px 28px; border-top:1px solid var(--line); scroll-margin-top:
 .step .swhat{ font-size:13.5px; font-weight:700; }
 .step .sresult{ font-size:13px; color:var(--sand-dim); }
 @media(max-width:600px){ .step{ grid-template-columns:30px 1fr; } .step .sresult{ grid-column:2; } }
-.path-desktop{
-  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:14px; margin-top:8px;
+
+/* ── GIRONE FLOW ── */
+.girone-flow{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+.gflow-row{
+  display:grid; grid-template-columns:160px 28px 1fr 28px 1fr;
+  align-items:center; gap:0;
+  background:var(--night-card); border:1px solid var(--line); border-radius:14px;
+  overflow:hidden;
 }
-.path-mobile{ display:none; }
+.gflow-pos{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:16px 14px; border-right:1px solid var(--line); gap:2px;
+}
+.gflow-pos.green{ background:rgba(27,158,140,0.10); }
+.gflow-pos.gold{ background:rgba(245,184,0,0.09); }
+.gflow-pos.red{ background:rgba(217,64,64,0.09); }
+.gflow-rank{
+  font-family:"Archivo Black",sans-serif; font-size:20px; line-height:1;
+}
+.gflow-pos.green .gflow-rank{ color:#5FE3CD; }
+.gflow-pos.gold .gflow-rank{ color:#FFC04D; }
+.gflow-pos.red .gflow-rank{ color:#FF8A8A; }
+.gflow-label{ font-size:10.5px; font-weight:700; color:var(--sand-faint); text-transform:uppercase; letter-spacing:0.05em; }
+.gflow-arrow{ text-align:center; font-size:16px; color:var(--sand-faint); flex-shrink:0; }
+.gflow-arrow.red-arrow{ color:rgba(217,64,64,0.4); }
+.gflow-via{
+  text-align:center; font-size:12px; font-weight:700; letter-spacing:0.04em;
+  text-transform:uppercase; padding:4px 10px; border-radius:999px;
+}
+.green-via{ background:rgba(27,158,140,0.12); color:#5FE3CD; }
+.gold-via{ background:rgba(245,184,0,0.12); color:#FFC04D; }
+.red-via{ background:rgba(217,64,64,0.10); color:#FF8A8A; }
+.gflow-dest{
+  font-size:13.5px; font-weight:800; color:var(--sand); text-align:center; padding:0 12px;
+}
+.gflow-dest.red-dest{ color:#FF8A8A; }
 @media(max-width:600px){
-  .path-desktop{ display:none; }
-  .path-mobile{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
-  .path-row-mobile{ background:var(--night-card); border:1px solid var(--line); border-radius:13px; overflow:hidden; }
-  .path-row-mobile .pbox{ border-radius:0; border:none; border-bottom:1px solid var(--line); text-align:left; padding:13px 16px; }
-  .path-row-mobile .pmid{ display:flex; align-items:center; gap:8px; padding:9px 16px; font-size:12px; color:var(--sand-faint); }
-  .path-row-mobile .pmid::before{ content:"↓"; font-size:14px; color:var(--orange); }
-  .path-row-mobile .pdest{ padding:11px 16px; font-size:13px; font-weight:700; color:var(--sand); }
+  .gflow-row{
+    grid-template-columns:1fr;
+    grid-template-rows:auto;
+  }
+  .gflow-pos{ flex-direction:row; gap:8px; border-right:none; border-bottom:1px solid var(--line); padding:14px 16px; justify-content:flex-start; }
+  .gflow-rank{ font-size:17px; }
+  .gflow-arrow{ display:none; }
+  .gflow-via{ text-align:left; margin:10px 16px 0; }
+  .gflow-dest{ text-align:left; padding:10px 16px 14px; }
+  .gflow-dest.red-dest{ text-align:left; }
 }
-.parrow{ color:var(--sand-faint); font-size:13px; text-align:center; white-space:nowrap; }
-.pbox{
-  border-radius:11px; padding:13px 16px; font-weight:800; font-size:13.5px;
-  text-align:center; letter-spacing:0.02em;
-}
-.pbox.green{ background:rgba(27,158,140,0.14); color:#5FE3CD; border:1px solid rgba(27,158,140,0.35); }
-.pbox.gold{ background:rgba(245,184,0,0.12); color:#FFC04D; border:1px solid rgba(245,184,0,0.35); }
-.pbox.red{ background:rgba(217,64,64,0.12); color:#FF8A8A; border:1px solid rgba(217,64,64,0.35); }
-.pbox.navy{ background:rgba(255,255,255,0.05); color:var(--sand); border:1px solid var(--line); }
 .tag{
   display:inline-block; font-size:10px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase;
   padding:4px 10px; border-radius:999px;
@@ -548,10 +574,6 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
   .step{ grid-template-columns:1fr; gap:8px; padding:13px 14px; }
   .step .sbadge{ width:26px; height:26px; }
   .step .sresult{ grid-column:1; }
-
-  /* path-desktop forzato a nascosto sotto 640px (path-mobile prende il posto) */
-  .path-desktop{ display:none; }
-  .path-mobile{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
 
   /* criteri di parità: numero e testo più compatti */
   .crow{ padding:11px 13px; gap:11px; }
@@ -776,21 +798,37 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
           <div class="reg-sec-num">02 — GIRONI</div>
           <h3 class="reg-sec-title">Il percorso del girone</h3>
           <p class="reg-sec-lede">12 squadre, 3 gironi da 4. Ogni squadra disputa esattamente 2 incontri. Per tutto ciò che non è specificato qui si applicano le regole della <strong style="color:var(--sand)">pallavolo</strong>.</p>
-          <div class="path-desktop">
-            <div class="pbox green">1° / 2° del girone</div>
-            <div class="parrow">→ qualificazione diretta →</div>
-            <div class="pbox navy">Quarti di finale</div>
-            <div class="pbox gold">3° del girone</div>
-            <div class="parrow">→ play-in →</div>
-            <div class="pbox navy">Quarti di finale</div>
-            <div class="pbox red">4° del girone</div>
-            <div class="parrow">→</div>
-            <div class="pbox red" style="background:rgba(217,64,64,0.06);">Eliminato/a</div>
-          </div>
-          <div class="path-mobile">
-            <div class="path-row-mobile"><div class="pbox green">1° / 2° del girone</div><div class="pmid">qualificazione diretta</div><div class="pdest">→ Quarti di finale</div></div>
-            <div class="path-row-mobile"><div class="pbox gold">3° del girone</div><div class="pmid">play-in</div><div class="pdest">→ Quarti di finale</div></div>
-            <div class="path-row-mobile" style="border-color:rgba(217,64,64,0.35);"><div class="pbox red">4° del girone</div><div class="pmid">eliminazione</div><div class="pdest" style="color:#FF8A8A;">→ Eliminato/a</div></div>
+          <div class="girone-flow">
+            <div class="gflow-row">
+              <div class="gflow-pos green">
+                <span class="gflow-rank">1° / 2°</span>
+                <span class="gflow-label">del girone</span>
+              </div>
+              <div class="gflow-arrow">→</div>
+              <div class="gflow-via green-via">qualificazione diretta</div>
+              <div class="gflow-arrow">→</div>
+              <div class="gflow-dest">Quarti di finale</div>
+            </div>
+            <div class="gflow-row">
+              <div class="gflow-pos gold">
+                <span class="gflow-rank">3°</span>
+                <span class="gflow-label">del girone</span>
+              </div>
+              <div class="gflow-arrow">→</div>
+              <div class="gflow-via gold-via">play-in</div>
+              <div class="gflow-arrow">→</div>
+              <div class="gflow-dest">Quarti di finale</div>
+            </div>
+            <div class="gflow-row">
+              <div class="gflow-pos red">
+                <span class="gflow-rank">4°</span>
+                <span class="gflow-label">del girone</span>
+              </div>
+              <div class="gflow-arrow red-arrow">→</div>
+              <div class="gflow-via red-via">eliminazione</div>
+              <div class="gflow-arrow red-arrow">→</div>
+              <div class="gflow-dest red-dest">Eliminato/a</div>
+            </div>
           </div>
           <div class="steps" style="margin-top:24px;">
             <div class="step"><div class="sbadge">1</div><div class="swhat">Sq. 1 vs Sq. 2 · Sq. 3 vs Sq. 4</div><div class="sresult">Abbinamenti definiti da sorteggio</div></div>
@@ -916,7 +954,6 @@ footer p{ font-size:12.5px; color:var(--sand-faint); line-height:1.7; }
   <div class="wrap">
     <div class="sec-eyebrow">Seguici</div>
     <h2 class="sec-title">Resta aggiornato</h2>
-    <p class="sec-lede">Date, orari, risultati e momenti dal vivo. Tutto sul nostro profilo Instagram.</p>
     <a href="https://instagram.com/sportzone_me" target="_blank" rel="noopener noreferrer" class="ig-card" style="text-decoration:none;">
       <div class="ig-icon">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1011,15 +1048,21 @@ document.addEventListener('keydown', function(e){
 
 // Countdown to 28 July 2026 19:00
 function updateCountdown(){
-  const target = new Date('2026-07-28T19:00:00');
+  const start = new Date('2026-07-28T19:00:00');
+  const end = new Date('2026-08-02T23:59:59');
   const now = new Date();
-  const diff = target - now;
   const countdownEl = document.getElementById('countdown');
 
-  if(diff <= 0){
-    countdownEl.innerHTML = '<p style="color:var(--orange);font-weight:800;font-size:18px;">Il torneo è in corso! 🏐</p>';
+  if(now >= end){
+    countdownEl.innerHTML = '<p style="color:var(--sand-dim);font-weight:800;font-size:18px;letter-spacing:0.04em;text-transform:uppercase;">Torneo terminato 🏆</p>';
     return;
   }
+  if(now >= start){
+    countdownEl.innerHTML = '<p style="color:var(--orange);font-weight:800;font-size:20px;letter-spacing:0.04em;text-transform:uppercase;">Il torneo è in corso! 🏐</p>';
+    return;
+  }
+
+  const diff = start - now;
 
   const d = Math.floor(diff / 86400000);
   const h = Math.floor((diff % 86400000) / 3600000);
